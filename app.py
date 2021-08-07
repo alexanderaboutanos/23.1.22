@@ -17,5 +17,12 @@ debug = DebugToolbarExtension(app)
 
 
 @app.route('/')
-def test():
-    return "test"
+def redirectt():
+    """redirects to list of users """
+    return redirect("/users")
+
+@app.route('/users')
+def list_users():
+    """Show list of users. """
+    users = User.query.all()
+    return render_template('list.html', users=users)

@@ -27,3 +27,9 @@ class User(db.Model):
 
     img_url = db.Column(db.Text,
                     default = 'https://www.cpd-umanitoba.com/wp-content/uploads/2016/08/profile-missing.png')
+
+    def __repr__(self):
+        """Show info about the user. """
+
+        u = self
+        return f"<User #{u.id}, {u.first_name} {u.last_name}>"

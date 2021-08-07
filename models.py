@@ -25,7 +25,8 @@ class User(db.Model):
     last_name = db.Column(db.String(50),
                     nullable = False)
 
-    img_url = db.Column(db.Text,
+    img_url = db.Column(db.String(5000),
+                    nullable = False,
                     default = 'https://www.cpd-umanitoba.com/wp-content/uploads/2016/08/profile-missing.png')
 
     def __repr__(self):

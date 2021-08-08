@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from app import app
-from models import db, User
+from models import db, User, Post
 
 # access a testdatabase, rather than your actual database.
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly_test'
@@ -16,7 +16,7 @@ app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
 db.drop_all()
 db.create_all()
 
-class UserTestCase(TestCase):
+class FlaskTestCase(TestCase):
     """Tests for """
 
     def setUp(self):
@@ -26,6 +26,10 @@ class UserTestCase(TestCase):
 
         user = User(first_name="TEST_FIRST_NAME", last_name="TEST_LAST_NAME", img_url="https://spng.pngfind.com/pngs/s/123-1234419_free-png-download-cute-cat-png-images-background.png")
         db.session.add(user)
+        db.session.commit()
+
+        post = Post(title="Post1", content="Well, this is just me, sayig hello", user_id="1")
+        db.session.add(post)
         db.session.commit()
 
         self.user_id = user.id
@@ -59,5 +63,14 @@ class UserTestCase(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn("TestUser2-first-name", html)
             self.assertIn("TestUser2-last-name", html)
+
+    def test_new_post(self):
+        with app.test_client() as client:
+            resp = client.get("/posts/1")
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("Well, this is just me, sayig hello", html)
+            self.assertIn("Post1", html)
 
     

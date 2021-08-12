@@ -13,6 +13,29 @@ content %}
     <input type="text" name="title" id="title" value="{{post.title}}" />
     <label for="content">Post Content</label>
     <input type="text" name="content" id="content" value="{{post.content}}" />
+    <br />
+    {% for tag in tags %}
+    <input
+      type="checkbox"
+      id="{{tag.id}}"
+      name="tagcheckbox"
+      value="{{tag.id}}"
+      {%
+      if
+      tag
+      in
+      post.tags
+      %}
+      checked
+      {%
+      else
+      %}
+      {%
+      endif
+      %}
+    />
+    <label for="{{tag.id}}"> {{tag.name}}</label><br />
+    {% endfor %}
     <button formaction="/users/{{post.user.id}}" formmethod="GET">
       Cancel
     </button>

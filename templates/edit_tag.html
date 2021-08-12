@@ -1,0 +1,18 @@
+<!-- @format -->
+
+{% extends "base.html" %} {% block title %} Edit Tag {% endblock %} {% block
+content %}
+
+<div>
+  <h1>Edit a Tag</h1>
+</div>
+
+<div>
+  <form>
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" value="{{tag.name}}" />
+    <button formaction="/tags" formmethod="GET">Cancel</button>
+    <button formaction="/tags/{{tag.id}}/edit" formmethod="POST">Edit</button>
+  </form>
+</div>
+{% endblock %}
